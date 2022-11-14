@@ -1,9 +1,13 @@
 package views;
 
-import files.SettlersUnit;
-import java.awt.Graphics2D;
+import gameFiles.SettlersUnit;
 
-public class SettlersUnitView
+import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
+
+public class SettlersUnitView extends UnitView
 {
     private SettlersUnit unit;
     
@@ -12,8 +16,19 @@ public class SettlersUnitView
         this.unit = unit;
     }
 
-    public void draw(Graphics2D g)
+    public void draw(Graphics2D g, int width, int height)
     {
-        
+        Rectangle2D rect = new Rectangle2D.Double(0, 0, width, height);
+
+        g.setColor(Color.red);
+
+        g.fill(rect);
+
+        if(unit.isSelected())
+        {
+            g.setColor(Color.green);
+            //g.setStroke(new BasicStoke(3)); ADD STOKE
+            g.draw(rect);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package files;
+package gameFiles;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,5 +14,9 @@ public class Game
     public Game()
     {
         units.add(new SettlersUnit(10, 10));
+        units.add(new SettlersUnit(20, 20));
+        
+        selectedUnit = units.get(1);
+        selectedUnit.setSelected(true);
     }
 }

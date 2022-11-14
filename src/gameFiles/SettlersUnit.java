@@ -1,4 +1,7 @@
-package files;
+package gameFiles;
+
+import views.SettlersUnitView;
+import views.UnitView;
 
 public class SettlersUnit extends MoveableUnit
 {
@@ -26,4 +29,10 @@ public class SettlersUnit extends MoveableUnit
     {
         
     }
+
+    public UnitView getView() 
+    {
+        return new SettlersUnitView(this);
+    }
+
 }

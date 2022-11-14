@@ -1,4 +1,4 @@
-package files;
+package gameFiles;
 
 public abstract class MoveableUnit extends GameUnit
 {
@@ -152,10 +152,10 @@ public abstract class MoveableUnit extends GameUnit
             moveListener.onUnitMoved(this);
         }
     }
-
-    public abstract void buildField();
-    public abstract void buildMine();
-    public abstract void buildRoad();
-    public abstract void buildCity();
+    
+    abstract void buildField();
+    abstract void buildMine();
+    abstract void buildRoad();
+    abstract void buildCity();
 
 }

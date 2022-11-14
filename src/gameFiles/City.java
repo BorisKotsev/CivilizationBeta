@@ -1,4 +1,6 @@
-package files;
+package gameFiles;
+
+import views.UnitView;
 
 public class City extends GameUnit 
 {
@@ -9,6 +11,11 @@ public class City extends GameUnit
         super(x, y);
 
         this.name = name;
+    }
+
+    public UnitView getView() 
+    {
+        return null;
     }
 
 }

@@ -1,9 +1,8 @@
 package tests;
 
 import javax.swing.JFrame;
-import javax.swing.JRadioButton;
 
-import files.Game;
+import gameFiles.Game;
 import views.GameView;
 
 public class TestView 

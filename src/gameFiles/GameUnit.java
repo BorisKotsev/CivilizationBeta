@@ -1,4 +1,7 @@
-package files;
+package gameFiles;
+
+import views.UnitView;
+
 public abstract class GameUnit 
 {
     protected int x;
@@ -38,4 +41,6 @@ public abstract class GameUnit
     {
         return false;
     }
+
+    public abstract UnitView getView();
 }
