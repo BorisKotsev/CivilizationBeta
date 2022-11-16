@@ -43,7 +43,6 @@ public class GameView extends JComponent
                 int x = e.getX(), y = e.getY();
                 int fieldWidth = width / game.cols, fieldHeight = height / game.rows;
                 int topLeftX = 0, topLeftY = 0;    
-                int unitX = topLeftX / fieldWidth, unitY = topLeftY / fieldHeight;
                 
                 outer: for(int i = 0; i < game.rows; i ++)
                 {
@@ -57,14 +56,16 @@ public class GameView extends JComponent
                         {
                             topLeftX = currTopLeftX;
                             topLeftY = currTopLeftY;
-
+                            
                             break outer;
                         }
                     }
                 }
+                
+                int unitX = topLeftX / fieldWidth, unitY = topLeftY / fieldHeight;
 
                 if(e.getButton() == MouseEvent.BUTTON1)
-                {   
+                {                       
                     if(game.selectedUnit != null)
                     {
                         game.selectedUnit.setSelected(false);

@@ -2,7 +2,7 @@ package views;
 
 import gameFiles.SettlersUnit;
 
-import java.awt.*;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -27,7 +27,7 @@ public class SettlersUnitView extends UnitView
         if(unit.isSelected())
         {
             g.setColor(Color.green);
-            //g.setStroke(new BasicStoke(3)); ADD STOKE
+            g.setStroke(new BasicStroke(1)); 
             g.draw(rect);
         }
     }

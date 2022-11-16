@@ -15,8 +15,9 @@ public class Game
     {
         units.add(new SettlersUnit(10, 10));
         units.add(new SettlersUnit(20, 20));
+        units.add(new SettlersUnit(12, 15));
         
-        selectedUnit = units.get(1);
-        selectedUnit.setSelected(true);
+        //selectedUnit = units.get(1);
+        //selectedUnit.setSelected(true);
     }
 }
