@@ -7,12 +7,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
 
 import javax.swing.JComponent;
+import javax.swing.JTextField;
 
+import gameFiles.SettlersUnit;
 import gameFiles.MoveableUnit;
 
 public class GameView extends JComponent
@@ -36,10 +40,18 @@ public class GameView extends JComponent
         
         setVisible(true);
 
+        setFocusable(true);
+
+        JTextField field = new JTextField();
+
+        this.add(field);
+
         addMouseListener(new MouseListener()
         {
             public void mouseClicked(MouseEvent e)
             {
+                requestFocusInWindow();
+
                 int x = e.getX(), y = e.getY();
                 int fieldWidth = width / game.cols, fieldHeight = height / game.rows;
                 int topLeftX = 0, topLeftY = 0;    
@@ -52,7 +64,7 @@ public class GameView extends JComponent
                         int currTopLeftY = i * fieldHeight;
                         
                         if(currTopLeftX <= x && x <= currTopLeftX + fieldWidth &&
-                        currTopLeftY <= y && y <= currTopLeftY + fieldHeight)
+                           currTopLeftY <= y && y <= currTopLeftY + fieldHeight)
                         {
                             topLeftX = currTopLeftX;
                             topLeftY = currTopLeftY;
@@ -64,7 +76,7 @@ public class GameView extends JComponent
                 
                 int unitX = topLeftX / fieldWidth, unitY = topLeftY / fieldHeight;
 
-                if(e.getButton() == MouseEvent.BUTTON1)
+                if(e.getButton() == MouseEvent.BUTTON1) //left
                 {                       
                     if(game.selectedUnit != null)
                     {
@@ -86,7 +98,7 @@ public class GameView extends JComponent
                     repaint();
                 }
 
-                if(e.getButton() == MouseEvent.BUTTON3)
+                if(e.getButton() == MouseEvent.BUTTON3) //right
                 {
                     if(game.selectedUnit == null)
                     {
@@ -101,7 +113,12 @@ public class GameView extends JComponent
                     if(Math.abs(game.selectedUnit.getX() - unitX) <= 1 || 
                        Math.abs(game.selectedUnit.getY() - unitY) <= 1)
                     {
-                        //((MoveableUnit)game.selectedUnit);
+                        MoveableUnit unit = ((MoveableUnit)game.selectedUnit);
+
+                        unit.setX(unitX);
+                        unit.setY(unitY);
+
+                        repaint();
                     }
                 }
             }
@@ -124,6 +141,39 @@ public class GameView extends JComponent
             public void mouseExited(MouseEvent e)
             {
                 
+            }
+            
+        });
+
+        addKeyListener(new KeyListener()
+        {
+            public void keyTyped(KeyEvent e) 
+            {
+                
+            }
+
+            public void keyPressed(KeyEvent e) 
+            {
+                if(e.getKeyChar() == 'b' ||
+                   e.getKeyChar() == 'B') 
+                {
+                    if(game.selectedUnit == null)
+                    {
+                        return;
+                    }
+
+                    if(!(game.selectedUnit instanceof SettlersUnit))
+                    {
+                        return;
+                    }
+
+                    ((SettlersUnit)game.selectedUnit).buildCity();
+                }             
+            }
+
+            public void keyReleased(KeyEvent e) 
+            {
+                  
             }
             
         });
@@ -155,5 +205,10 @@ public class GameView extends JComponent
 
             graphics.translate(-fieldWidth * unit.getX(), -fieldHeight * unit.getY());
         }
+    }
+
+    public boolean isFocusable()
+    {
+        return true;
     }
 }

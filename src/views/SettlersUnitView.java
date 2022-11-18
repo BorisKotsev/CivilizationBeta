@@ -27,7 +27,7 @@ public class SettlersUnitView extends UnitView
         if(unit.isSelected())
         {
             g.setColor(Color.green);
-            g.setStroke(new BasicStroke(1)); 
+            g.setStroke(new BasicStroke(2)); 
             g.draw(rect);
         }
     }

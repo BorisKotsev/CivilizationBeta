@@ -1,5 +1,6 @@
 package gameFiles;
 
+import views.CityView;
 import views.UnitView;
 
 public class City extends GameUnit 
@@ -15,7 +16,7 @@ public class City extends GameUnit
 
     public UnitView getView() 
     {
-        return null;
+        return new CityView(this);
     }
 
 }

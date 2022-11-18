@@ -13,7 +13,7 @@ public class TestView
         
         frame.setBounds(10, 10, 500, 500);
 
-        frame.add(new GameView(new Game(), 500, 500));
+        frame.add(new GameView(Game.getInctnance(), 500, 500));
 
         frame.pack();
 
