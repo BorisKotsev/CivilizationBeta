@@ -3,6 +3,8 @@ package gameFiles;
 public abstract class MoveableUnit extends GameUnit
 {
     private MoveListener moveListener;
+    
+    private boolean moved;
 
     public void addMoveListener(MoveListener listener)
     {
@@ -12,16 +14,42 @@ public abstract class MoveableUnit extends GameUnit
     public MoveableUnit(int x, int y)
     {
         super(x, y);
+        
+        moved = false;
     }
+
+    public void setMoved(boolean moved)
+    {
+        this.moved = moved;
+    }
+
+    public boolean isMoved()
+   {
+        return moved;
+   }
 
     public void setX(int x)
     {
+        if(moved)
+        {
+            return;
+        }
+
         this.x = x;
+
+        moved = true;
     }
 
     public void setY(int y)
     {
+        if(moved)
+        {
+            return;
+        }
+
         this.y = y;
+
+        moved = true;
     }
 
     public boolean isMoveable()
@@ -29,133 +57,21 @@ public abstract class MoveableUnit extends GameUnit
         return true;
     }
 
-    public void moveUp()
+    public void setXY(int x, int y)
     {
-        if(!isSelected())
+        if(moved)
         {
             return;
         }
+        
+        this.x = x;
+        this.y = y;
 
-        setY(getY() - 1);
-
-        if(moveListener != null)
-        {
-            moveListener.onUnitMoved(this);
-        }
-    }
-
-    public void moveUpRight()
-    {
-        if(!isSelected())
-        {
-            return;
-        }
-
-        setX(getX() + 1);
-        setY(getY() - 1);
-
-        if(moveListener != null)
-        {
-            moveListener.onUnitMoved(this);
-        }
-    }
-
-    public void moveRight()
-    {
-        if(!isSelected())
-        {
-            return;
-        }
-
-        setX(getX() + 1);
-
-        if(moveListener != null)
-        {
-            moveListener.onUnitMoved(this);
-        }
-    }
-
-    public void moveDownRight()
-    {
-        if(!isSelected())
-        {
-            return;
-        }
-
-        setX(getX() + 1);
-        setY(getY() + 1);
-
-        if(moveListener != null)
-        {
-            moveListener.onUnitMoved(this);
-        }
-    }
-
-    public void moveDown()
-    {
-        if(!isSelected())
-        {
-            return;
-        }
-
-        setY(getY() + 1);
-
-        if(moveListener != null)
-        {
-            moveListener.onUnitMoved(this);
-        }
-    }
-
-    public void moveDownLeft()
-    {
-        if(!isSelected())
-        {
-            return;
-        }
-
-        setX(getX() - 1);
-        setY(getY() + 1);
-
-        if(moveListener != null)
-        {
-            moveListener.onUnitMoved(this);
-        }
-    }
-
-    public void moveLeft()
-    {
-        if(!isSelected())
-        {
-            return;
-        }
-
-        setX(getX() - 1);
-
-        if(moveListener != null)
-        {
-            moveListener.onUnitMoved(this);
-        }
-    }
-
-    public void moveUpLeft()
-    {
-        if(!isSelected())
-        {
-            return;
-        }
-
-        setX(getX() - 1);
-        setY(getY() - 1);
-
-        if(moveListener != null)
-        {
-            moveListener.onUnitMoved(this);
-        }
+        moved = true;
     }
     
     abstract void buildField();
     abstract void buildMine();
     abstract void buildRoad();
     abstract void buildCity();
-
 }

@@ -10,6 +10,8 @@ public class SettlersUnit extends MoveableUnit
     public SettlersUnit(int x, int y) 
     {
         super(x, y);
+
+        setProductionPoints(5);
     }
 
     public void buildField()

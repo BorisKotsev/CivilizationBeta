@@ -7,7 +7,9 @@ public abstract class GameUnit
     protected int x;
     protected int y;
 
-    protected boolean selected;
+    private boolean selected;
+
+    private int productionPoints;
 
     public int getX() 
     {
@@ -38,6 +40,21 @@ public abstract class GameUnit
     }
 
     public boolean isMoveable()
+    {
+        return false;
+    }
+
+    public void setProductionPoints(int productionPoints)
+    {
+        this.productionPoints = productionPoints;
+    }
+
+    public int getProductionPoints()
+    {
+        return productionPoints;
+    }
+
+    public boolean isCity()
     {
         return false;
     }

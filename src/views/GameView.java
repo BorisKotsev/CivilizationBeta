@@ -1,5 +1,6 @@
 package views;
 
+import gameFiles.City;
 import gameFiles.Game;
 import gameFiles.GameUnit;
 
@@ -13,6 +14,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JTextField;
@@ -116,8 +119,7 @@ public class GameView extends JComponent
                     {
                         MoveableUnit unit = ((MoveableUnit)game.selectedUnit);
 
-                        unit.setX(unitX);
-                        unit.setY(unitY);
+                        unit.setXY(unitX, unitY);
 
                         repaint();
                     }
@@ -171,7 +173,18 @@ public class GameView extends JComponent
                     ((SettlersUnit)game.selectedUnit).buildCity();
 
                     repaint();
-                }             
+                }       
+                
+                if(e.getKeyCode() == 10) //enter
+                {
+                    new LinkedList<>(game.units).stream().filter(unit -> unit.isCity()).
+                        map(unit -> (City)unit).forEach(city -> city.incrementProductionInProgress());
+
+                    new LinkedList<>(game.units).stream().filter(unit -> unit.isMoveable()).
+                        map(unit -> (MoveableUnit)unit).forEach(moveableUnit -> moveableUnit.setMoved(false));
+                
+                    repaint();    
+                }
             }
 
             public void keyReleased(KeyEvent e) 
