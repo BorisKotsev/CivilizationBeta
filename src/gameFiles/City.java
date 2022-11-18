@@ -19,4 +19,9 @@ public class City extends GameUnit
         return new CityView(this);
     }
 
+    public String getName()
+    {
+        return name;
+    }
+
 }

@@ -12,6 +12,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 
 import javax.swing.JComponent;
 import javax.swing.JTextField;
@@ -36,7 +37,7 @@ public class GameView extends JComponent
         setPreferredSize(new Dimension(width, height));
         setMaximumSize(new Dimension(width, height));
         
-        setBackground(Color.white);
+        setBackground(new Color(58, 224, 103));
         
         setVisible(true);
 
@@ -168,6 +169,8 @@ public class GameView extends JComponent
                     }
 
                     ((SettlersUnit)game.selectedUnit).buildCity();
+
+                    repaint();
                 }             
             }
 
@@ -184,6 +187,10 @@ public class GameView extends JComponent
         super.paintComponent(g);
 
         Graphics2D graphics = (Graphics2D) g;
+
+        graphics.setColor(getBackground());
+        graphics.fill(new Rectangle2D.Double(0, 0, width, height));
+        graphics.setColor(Color.black);
 
         int fieldWidth = width / game.cols, fieldHeight = height / game.rows;
 
