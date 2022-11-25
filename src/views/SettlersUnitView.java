@@ -16,11 +16,11 @@ public class SettlersUnitView extends UnitView
         this.unit = unit;
     }
 
-    public void draw(Graphics2D g, int width, int height)
+    public void draw(Graphics2D g, int width, int height, Color playerColor)
     {
         Rectangle2D rect = new Rectangle2D.Double(0, 0, width, height);
 
-        g.setColor(Color.red);
+        g.setColor(playerColor);
 
         g.fill(rect);
 

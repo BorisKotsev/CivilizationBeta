@@ -15,11 +15,11 @@ public class CityView extends UnitView
         this.city = city;
     }
 
-    void draw(Graphics2D g, int width, int height) 
+    void draw(Graphics2D g, int width, int height, Color playerColor) 
     {
         Rectangle2D rect = new Rectangle2D.Double(0, 0, width, height);
 
-        g.setColor(Color.pink);
+        g.setColor(playerColor);
         g.fill(rect);
         g.translate(0, 2 * height);
         g.setColor(Color.white);

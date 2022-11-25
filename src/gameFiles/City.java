@@ -31,7 +31,9 @@ public class City extends GameUnit
 
         if(productionInProgress >= inProduction.getProductionPoints())
         {
-            Game.getInctnance().units.add(inProduction);
+            Player currPlayer = Game.getInctnance().players.get(Game.getInctnance().playerIndex);
+
+            currPlayer.getUnits().add((MoveableUnit)inProduction);
 
             inProduction = new SettlersUnit(x + 1, y);
 

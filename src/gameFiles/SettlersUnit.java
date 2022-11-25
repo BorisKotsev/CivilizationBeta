@@ -35,8 +35,10 @@ public class SettlersUnit extends MoveableUnit
 
         City city = new City(cityName, this.x, this.y);
 
-        Game.getInctnance().units.add(city);
-        Game.getInctnance().units.remove(this);
+        Player currPlayer = Game.getInctnance().players.get(Game.getInctnance().playerIndex);
+
+        currPlayer.getCities().add(city);
+        currPlayer.getUnits().remove(this);
     }
 
     public UnitView getView() 

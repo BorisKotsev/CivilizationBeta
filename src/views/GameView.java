@@ -15,13 +15,13 @@ import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
 import gameFiles.SettlersUnit;
 import gameFiles.MoveableUnit;
+import gameFiles.Player;
 
 public class GameView extends JComponent
 {
@@ -81,18 +81,20 @@ public class GameView extends JComponent
                 int unitX = topLeftX / fieldWidth, unitY = topLeftY / fieldHeight;
 
                 if(e.getButton() == MouseEvent.BUTTON1) //left
-                {                       
-                    if(game.selectedUnit != null)
+                {                      
+                    Player currPlayer = game.players.get(game.playerIndex);
+                    
+                    if(currPlayer.getSelectedUnit() != null)
                     {
-                        game.selectedUnit.setSelected(false);
-                        game.selectedUnit = null;
+                        currPlayer.getSelectedUnit().setSelected(false);
+                        currPlayer.setSelectedUnit(null);
                     }
 
-                    for(GameUnit unit: game.units)
+                    for(GameUnit unit : currPlayer.getAllUnits())
                     {
                         if(unitX == unit.getX() && unitY == unit.getY())
                         {
-                            game.selectedUnit = unit;
+                            currPlayer.setSelectedUnit(unit);
                             unit.setSelected(true);
 
                             break;
@@ -104,20 +106,22 @@ public class GameView extends JComponent
 
                 if(e.getButton() == MouseEvent.BUTTON3) //right
                 {
-                    if(game.selectedUnit == null)
+                    Player currPlayer = game.players.get(game.playerIndex);
+                    
+                    if(currPlayer.getSelectedUnit() == null)
                     {
                         return;
                     }
 
-                    if(!game.selectedUnit.isMoveable())
+                    if(!currPlayer.getSelectedUnit().isMoveable())
                     {
                         return;
                     }
 
-                    if(Math.abs(game.selectedUnit.getX() - unitX) <= 1 || 
-                       Math.abs(game.selectedUnit.getY() - unitY) <= 1)
+                    if(Math.abs(currPlayer.getSelectedUnit().getX() - unitX) <= 1 && 
+                       Math.abs(currPlayer.getSelectedUnit().getY() - unitY) <= 1)
                     {
-                        MoveableUnit unit = ((MoveableUnit)game.selectedUnit);
+                        MoveableUnit unit = ((MoveableUnit)currPlayer.getSelectedUnit());
 
                         unit.setXY(unitX, unitY);
 
@@ -157,32 +161,37 @@ public class GameView extends JComponent
 
             public void keyPressed(KeyEvent e) 
             {
+                
                 if(e.getKeyChar() == 'b' ||
-                   e.getKeyChar() == 'B') 
+                e.getKeyChar() == 'B') 
                 {
-                    if(game.selectedUnit == null)
+                    Player currPlayer = game.players.get(game.playerIndex);
+                    
+                    if(currPlayer.getSelectedUnit() == null)
                     {
                         return;
                     }
 
-                    if(!(game.selectedUnit instanceof SettlersUnit))
+                    if(!(currPlayer.getSelectedUnit() instanceof SettlersUnit))
                     {
                         return;
                     }
 
-                    ((SettlersUnit)game.selectedUnit).buildCity();
+                    ((SettlersUnit)currPlayer.getSelectedUnit()).buildCity();
 
                     repaint();
                 }       
                 
                 if(e.getKeyCode() == 10) //enter
                 {
-                    new LinkedList<>(game.units).stream().filter(unit -> unit.isCity()).
-                        map(unit -> (City)unit).forEach(city -> city.incrementProductionInProgress());
+                    Player currPlayer = game.players.get(game.playerIndex);
 
-                    new LinkedList<>(game.units).stream().filter(unit -> unit.isMoveable()).
-                        map(unit -> (MoveableUnit)unit).forEach(moveableUnit -> moveableUnit.setMoved(false));
+                    currPlayer.getCities().forEach(city -> city.incrementProductionInProgress());
+
+                    currPlayer.getUnits().forEach(moveableUnit -> moveableUnit.setMoved(false));
                 
+                    game.nextPlayer();
+
                     repaint();    
                 }
             }
@@ -217,13 +226,25 @@ public class GameView extends JComponent
             graphics.draw(new Line2D.Double(0, i, width, i));
         }
 
-        for(GameUnit unit : game.units)
+        for(Player player : game.players)
         {
-            graphics.translate(fieldWidth * unit.getX(), fieldHeight * unit.getY());
+            for(MoveableUnit unit : player.getUnits())
+            {
+                graphics.translate(fieldWidth * unit.getX(), fieldHeight * unit.getY());
+                
+                unit.getView().draw(graphics, fieldWidth, fieldHeight, game.playerColorsMap.get(player.getID()));
+                
+                graphics.translate(-fieldWidth * unit.getX(), -fieldHeight * unit.getY());
+            }
 
-            unit.getView().draw(graphics, fieldWidth, fieldHeight);
-
-            graphics.translate(-fieldWidth * unit.getX(), -fieldHeight * unit.getY());
+            for(City city : player.getCities())
+            {
+                graphics.translate(fieldWidth * city.getX(), fieldHeight * city.getY());
+                
+                city.getView().draw(graphics, fieldWidth, fieldHeight, game.playerColorsMap.get(player.getID()));
+                
+                graphics.translate(-fieldWidth * city.getX(), -fieldHeight * city.getY());
+            }
         }
     }
 
