@@ -34,4 +34,14 @@ public enum Technology
     {
         this(sciencePoints, new Technology[0]);
     }
+
+    public int getSciencePoints() 
+    {
+        return sciencePoints;
+    }
+
+    public List<Technology> getNeededTechnologies() 
+    {
+        return neededTechnologies;
+    }
 }

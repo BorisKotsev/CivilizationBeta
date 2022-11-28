@@ -9,7 +9,8 @@ public class City extends GameUnit
     
     private int productionPerTurn; 
     private int productionInProgress;
-    
+    private int scincePerTurn;
+
     private GameUnit inProduction;
 
     public City(String name, int x, int y)
@@ -19,8 +20,8 @@ public class City extends GameUnit
         this.name = name;
 
         productionPerTurn = 1;
-
         productionInProgress = 0;
+        scincePerTurn = 1;
 
         inProduction = new SettlersUnit(x + 1, y);
     }
@@ -44,6 +45,16 @@ public class City extends GameUnit
     public UnitView getView() 
     {
         return new CityView(this);
+    }
+
+    public int getScincePerTurn() 
+    {
+        return scincePerTurn;
+    }
+
+    public void setScincePerTurn(int scincePerTurn) 
+    {
+        this.scincePerTurn = scincePerTurn;
     }
 
     public String getName()

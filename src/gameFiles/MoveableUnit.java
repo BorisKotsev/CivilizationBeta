@@ -1,21 +1,26 @@
 package gameFiles;
 
 public abstract class MoveableUnit extends GameUnit
-{
-    private MoveListener moveListener;
-    
+{    
     private boolean moved;
-
-    public void addMoveListener(MoveListener listener)
-    {
-        this.moveListener = listener;
-    }
+    private boolean freezed;
 
     public MoveableUnit(int x, int y)
     {
         super(x, y);
         
         moved = false;
+        freezed = false;
+    }
+
+    public void setSelected(boolean selected)
+    {
+        super.setSelected(selected);
+
+        if(selected)
+        {
+            setFreezed(false);
+        }
     }
 
     public void setMoved(boolean moved)
@@ -24,9 +29,19 @@ public abstract class MoveableUnit extends GameUnit
     }
 
     public boolean isMoved()
-   {
+    {
         return moved;
-   }
+    }
+
+    public boolean isFreezed() 
+    {
+        return freezed;
+    }
+
+    public void setFreezed(boolean freezed) 
+    {
+        this.freezed = freezed;
+    }
 
     public void setX(int x)
     {

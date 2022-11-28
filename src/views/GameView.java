@@ -14,14 +14,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.util.LinkedList;
 
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import gameFiles.SettlersUnit;
+import gameFiles.Technology;
 import gameFiles.MoveableUnit;
 import gameFiles.Player;
+import gameFiles.SelectionManager;
 
 public class GameView extends JComponent
 {
@@ -125,6 +128,13 @@ public class GameView extends JComponent
 
                         unit.setXY(unitX, unitY);
 
+                        if(unit.isMoved())
+                        {
+                            MoveableUnit next = SelectionManager.nextUnit(currPlayer);
+                        
+                            currPlayer.setSelectedUnit(next);
+                        }
+
                         repaint();
                     }
                 }
@@ -186,11 +196,30 @@ public class GameView extends JComponent
                 {
                     Player currPlayer = game.players.get(game.playerIndex);
 
-                    currPlayer.getCities().forEach(city -> city.incrementProductionInProgress());
+                    currPlayer.getCities().forEach(city -> {city.incrementProductionInProgress(); city.setSelected(false);});
 
-                    currPlayer.getUnits().forEach(moveableUnit -> moveableUnit.setMoved(false));
-                
+                    currPlayer.getUnits().forEach(moveableUnit -> {moveableUnit.setMoved(false); moveableUnit.setSelected(false);});
+                    
+                    currPlayer.incrementSciencePoints();
+
                     game.nextPlayer();
+                    
+                    Player nextPlayer = game.players.get(game.playerIndex);
+
+                    JOptionPane.showMessageDialog(null, nextPlayer.getName() + "'s on turn!");
+
+                    if(nextPlayer.getTechnologyInProgress() == null && nextPlayer.getCities().size() > 0)
+                    {
+                        JComboBox<?> comboBox = new JComboBox<>(nextPlayer.getPossibleTechnologies().toArray());
+
+                        JOptionPane.showMessageDialog(null, comboBox, "Select technology: ", JOptionPane.QUESTION_MESSAGE);
+                   
+                        nextPlayer.setTechnologyInProgress((Technology)comboBox.getSelectedItem());
+                    }
+
+                    MoveableUnit next = SelectionManager.nextUnit(currPlayer);
+                        
+                    currPlayer.setSelectedUnit(next);                    
 
                     repaint();    
                 }
