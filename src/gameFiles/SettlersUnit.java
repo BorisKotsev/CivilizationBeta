@@ -10,8 +10,8 @@ public class SettlersUnit extends MoveableUnit
     public SettlersUnit(int x, int y) 
     {
         super(x, y);
-
         setProductionPoints(5);
+        initImage("images\\settlers.png");
     }
 
     public void buildField()
@@ -35,7 +35,7 @@ public class SettlersUnit extends MoveableUnit
 
         City city = new City(cityName, this.x, this.y);
 
-        Player currPlayer = Game.getInctnance().players.get(Game.getInctnance().playerIndex);
+        Player currPlayer = Game.getInstance().players.get(Game.getInstance().playerIndex);
 
         currPlayer.getCities().add(city);
         currPlayer.getUnits().remove(this);

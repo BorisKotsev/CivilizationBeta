@@ -1,5 +1,11 @@
 package gameFiles;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import views.UnitView;
 
 public abstract class GameUnit 
@@ -10,6 +16,30 @@ public abstract class GameUnit
     private boolean selected;
 
     private int productionPoints;
+
+    private BufferedImage image;
+
+    public BufferedImage getImage() 
+    {
+        return image;
+    }
+
+    protected void initImage(String path) 
+    {
+        File src = new File(path);
+        BufferedImage img = null;
+
+        try 
+        {
+            img = ImageIO.read(src);
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
+
+        image = img;        
+    }
 
     public int getX() 
     {

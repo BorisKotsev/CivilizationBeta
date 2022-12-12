@@ -43,7 +43,7 @@ public class Player
 
         for (City city : cities) 
         {
-            sum += city.getScincePerTurn();    
+            sum += city.getSciencePerTurn();    
         }
 
         scienceInProgress += sum;

@@ -9,11 +9,11 @@ public class TestView
 {
     public static void main(String[] args) 
     {
-        JFrame frame = new JFrame("Game");
+        JFrame frame = new JFrame("Civilization");
         
-        frame.setBounds(10, 10, 500, 500);
+        frame.setBounds(10, 10, 960, 960);
 
-        frame.add(new GameView(Game.getInctnance(), 500, 500));
+        frame.add(new GameView(Game.getInstance(), 960, 960));
 
         frame.pack();
 

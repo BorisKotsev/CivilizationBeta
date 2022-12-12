@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
@@ -23,7 +24,12 @@ public class CityView extends UnitView
         g.fill(rect);
         g.translate(0, 2 * height);
         g.setColor(Color.white);
-        g.drawString(city.getName(), 0, 0);
+
+        g.setFont(new Font("Verdana", Font.PLAIN, 20));
+        g.drawString(city.getName(), 0, -12);
+        
         g.translate(0, -2 * height);
+
+        g.drawImage(city.getImage(), 0, 0, null);
     }
 }

@@ -10,7 +10,7 @@ public class Game
 {
     private static Game instance = null;
 
-    public static Game getInctnance()
+    public static Game getInstance()
     {
         if(instance == null)
         {
@@ -27,8 +27,8 @@ public class Game
 
     public GameUnit selectedUnit = null;
 
-    public int rows = 50;
-    public int cols = 50;
+    public int rows = 30;
+    public int cols = 30;
     public int playerIndex = 0;
     
     private Game()
@@ -45,7 +45,7 @@ public class Game
         Player player2 = new Player("Zlatio");
         
         player1.getUnits().add(new SettlersUnit(3, 3));
-        player2.getUnits().add(new SettlersUnit(46, 46));
+        player2.getUnits().add(new SettlersUnit(26, 26));
 
         players.add(player1);
         players.add(player2);

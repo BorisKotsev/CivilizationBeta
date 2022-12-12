@@ -5,6 +5,40 @@ public abstract class MoveableUnit extends GameUnit
     private boolean moved;
     private boolean freezed;
 
+    private int attackPoints;
+    private int defensePoints;
+    private int healthPoints;
+
+    public int getAttackPoints() 
+    {
+        return attackPoints;
+    }
+
+    public void setAttackPoints(int attackPoints) 
+    {
+        this.attackPoints = attackPoints;
+    }
+
+    public int getDefensePoints() 
+    {
+        return defensePoints;
+    }
+
+    public void setDefensePoints(int defensePoints) 
+    {
+        this.defensePoints = defensePoints;
+    }
+
+    public int getHealthPoints() 
+    {
+        return healthPoints;
+    }
+
+    public void setHealthPoints(int healthPoints) 
+    {
+        this.healthPoints = healthPoints;
+    }
+
     public MoveableUnit(int x, int y)
     {
         super(x, y);

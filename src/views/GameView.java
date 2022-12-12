@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -24,6 +25,7 @@ import gameFiles.SettlersUnit;
 import gameFiles.Technology;
 import gameFiles.MoveableUnit;
 import gameFiles.Player;
+import gameFiles.Production;
 import gameFiles.SelectionManager;
 
 public class GameView extends JComponent
@@ -170,10 +172,8 @@ public class GameView extends JComponent
             }
 
             public void keyPressed(KeyEvent e) 
-            {
-                
-                if(e.getKeyChar() == 'b' ||
-                e.getKeyChar() == 'B') 
+            {  
+                if(e.getKeyChar() == 'b' || e.getKeyChar() == 'B') 
                 {
                     Player currPlayer = game.players.get(game.playerIndex);
                     
@@ -215,6 +215,22 @@ public class GameView extends JComponent
                         JOptionPane.showMessageDialog(null, comboBox, "Select technology: ", JOptionPane.QUESTION_MESSAGE);
                    
                         nextPlayer.setTechnologyInProgress((Technology)comboBox.getSelectedItem());
+                    }
+
+                    //check production in cities
+                    List<City> cities = nextPlayer.getCities();
+
+                    for(City city : cities)
+                    {
+                        if(city.getInProduction() == null)
+                        {
+                            JComboBox<?> comboBox = new JComboBox<>(city.getThingsToBuild().toArray());
+
+                            JOptionPane.showMessageDialog(null, comboBox, 
+                                "Select what to build in " + city.getName() + ":", JOptionPane.QUESTION_MESSAGE);
+                   
+                            city.setInProduction((Production)comboBox.getSelectedItem());
+                        }
                     }
 
                     MoveableUnit next = SelectionManager.nextUnit(currPlayer);

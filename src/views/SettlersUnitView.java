@@ -30,5 +30,7 @@ public class SettlersUnitView extends UnitView
             g.setStroke(new BasicStroke(2)); 
             g.draw(rect);
         }
+
+        g.drawImage(unit.getImage(), 0, 0, null);
     }
 }

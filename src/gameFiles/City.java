@@ -1,5 +1,9 @@
 package gameFiles;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import gameFiles.buildings.Building;
 import views.CityView;
 import views.UnitView;
 
@@ -8,10 +12,13 @@ public class City extends GameUnit
     private final String name;
     
     private int productionPerTurn; 
+    
     private int productionInProgress;
-    private int scincePerTurn;
+    private int sciencePerTurn;
 
-    private GameUnit inProduction;
+    private Production inProduction;
+
+    private List<Building> buildings;
 
     public City(String name, int x, int y)
     {
@@ -21,9 +28,13 @@ public class City extends GameUnit
 
         productionPerTurn = 1;
         productionInProgress = 0;
-        scincePerTurn = 1;
+        sciencePerTurn = 1;
 
-        inProduction = new SettlersUnit(x + 1, y);
+        inProduction = (Production) new SettlersUnit(x + 1, y);
+
+        buildings = new LinkedList<>();
+
+        initImage("images\\city.png");
     }
 
     public void incrementProductionInProgress()
@@ -32,29 +43,61 @@ public class City extends GameUnit
 
         if(productionInProgress >= inProduction.getProductionPoints())
         {
-            Player currPlayer = Game.getInctnance().players.get(Game.getInctnance().playerIndex);
+            Player currPlayer = Game.getInstance().players.get(Game.getInstance().playerIndex);
 
-            currPlayer.getUnits().add((MoveableUnit)inProduction);
+            if(inProduction instanceof Building)
+            {
+                buildings.add((Building)inProduction);
+            }
+            else if(inProduction instanceof MoveableUnit)
+            {
+                currPlayer.getUnits().add((MoveableUnit)inProduction);
+            }
 
-            inProduction = new SettlersUnit(x + 1, y);
+            inProduction = null; //inProduction = (Production) new SettlersUnit(x + 1, y);
 
             productionInProgress -= inProduction.getProductionPoints();
         }
     }
 
+    public Production getInProduction()
+    {
+        return inProduction;
+    }    
+
+    public void setInProduction(Production inProduction)
+    {
+        this.inProduction = inProduction;
+    }
+
+    public List<Production> getThingsToBuild()
+    {
+        return new LinkedList<>();
+    }
+    
     public UnitView getView() 
     {
         return new CityView(this);
     }
 
-    public int getScincePerTurn() 
+    public int getProductionPerTurn() 
     {
-        return scincePerTurn;
+        return productionPerTurn;
     }
 
-    public void setScincePerTurn(int scincePerTurn) 
+    public void setProductionPerTurn(int productionPerTurn) 
     {
-        this.scincePerTurn = scincePerTurn;
+        this.productionPerTurn = productionPerTurn;
+    }
+
+    public int getSciencePerTurn() 
+    {
+        return sciencePerTurn;
+    }
+
+    public void setSciencePerTurn(int sciencePerTurn) 
+    {
+        this.sciencePerTurn = sciencePerTurn;
     }
 
     public String getName()

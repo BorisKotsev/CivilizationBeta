@@ -6,9 +6,9 @@ public enum Technology
 {
     HORSEBACK_RIDING(5),
     CEREMONIAL_BURIAL(5),
-    POTERRY(5),
+    POTTERY(5),
     ALPHABET(5),
-    THE_WEEL(5),
+    THE_WHEEL(5),
     MASONRY(5),
     BRONZE_WORKING(5),
     
